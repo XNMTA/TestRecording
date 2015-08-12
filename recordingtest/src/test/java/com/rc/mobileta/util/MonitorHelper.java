@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 /**
  * Created by shawn.zhang on 2015/8/12.
  */
+//todo: refactor to make it readable
 public class MonitorHelper {
     public static Thread thread;
     public static Object wait_obj = new Object();
