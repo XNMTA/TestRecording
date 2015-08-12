@@ -1,6 +1,7 @@
 package com.rc.mobileta;
 
 import com.rc.mobileta.util.MonitorHelper;
+import com.rc.mobileta.util.SubtitleMaker;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
@@ -13,6 +14,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -33,6 +35,8 @@ public class RecordingDemo {
     private static final String key0Id = "com.ringcentral.android:id/zero";
     private static final String callBtnId = "com.ringcentral.android:id/btnCall";
     private static final String endCallBtnId = "com.ringcentral.android:id/btn_call_endcall";
+    private SubtitleMaker subtitleMaker;
+
 
 
     @BeforeMethod
@@ -49,6 +53,7 @@ public class RecordingDemo {
         capabilitiesDevice1.setCapability("app", app.getAbsolutePath());
         capabilitiesDevice1.setCapability("appPackage", packageName);
         MonitorHelper.startRec("TestName");
+        subtitleMaker = new SubtitleMaker("TestName.srt");
         driverDevice1 = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilitiesDevice1);
     }
 
@@ -56,21 +61,26 @@ public class RecordingDemo {
     public void tearDown() throws Exception {
         driverDevice1.quit();
         MonitorHelper.stopRec();
+        subtitleMaker.finishSubtitle();
         Thread.sleep(3000);
     }
 
     @Test
-    public void test() throws InterruptedException {
+    public void test() throws InterruptedException, IOException {
         // first login
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         System.out.println("*** Timer *** + start: " + dateFormat.format(new Date()));
 
+        subtitleMaker.addStepMsgToSubtitle("STEP 1: click DialPad");
         clickDialPad();
+        subtitleMaker.addStepMsgToSubtitle("STEP 2: call 102");
         click1();
         click0();
         click2();
         clickCall();
+        subtitleMaker.addStepMsgToSubtitle("STEP 3: call lasts for 20s");
         Thread.sleep(20000);
+        subtitleMaker.addStepMsgToSubtitle("STEP 4: end the call");
         clickEndCall();
         System.out.println("*** Timer *** + end: " + dateFormat.format(new Date()));
     }

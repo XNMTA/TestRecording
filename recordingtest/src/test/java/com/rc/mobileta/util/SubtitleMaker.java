@@ -5,10 +5,6 @@ import org.joda.time.DateTimeZone;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Timer;
 
 /**
  * Created by shawn.zhang on 2015/8/12.
@@ -18,14 +14,16 @@ public class SubtitleMaker {
     private String filePath = "";
     private Long durationStartTime = 0L;
     private Long durationEndTime = 0L;
+    private Long movieStartTime = 0L;
     private String durationText = "Preparation...";
     private String durationStartTimeStr = "00:00:00,000";
     private FileWriter fileWriter;
 
-    SubtitleMaker(String filePath) throws IOException {
+    public SubtitleMaker(String filePath) throws IOException {
         this.filePath = filePath;
         this.durationStartTime = new DateTime().getMillis();
         this.fileWriter = new FileWriter(filePath);
+        this.movieStartTime = durationStartTime;
     }
     public static SubtitleMaker initSubtitle(String subtitle) throws IOException {
         return new SubtitleMaker(subtitle);
@@ -50,7 +48,7 @@ public class SubtitleMaker {
         fileWriter.write(durationStartTimeStr);
         fileWriter.write(" --> ");
         long tempTime = new DateTime().getMillis();
-        timeDelta = tempTime - durationStartTime;
+        timeDelta = tempTime - movieStartTime;
         durationStartTime = tempTime;
         durationStartTimeStr = new DateTime(timeDelta).withZone(DateTimeZone.UTC).toString("HH:mm:ss,SSS");
         fileWriter.write(durationStartTimeStr + "\n");
