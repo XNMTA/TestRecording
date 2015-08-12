@@ -34,10 +34,6 @@ public class MonitorHelper {
         thread.join();
     }
 
-    public static void generateSubtitle(String subtitle) {
-
-    }
-
     public static void runShell(String movieName) throws IOException, InterruptedException {
         ProcessBuilder builder = new ProcessBuilder("cmd", "/c", "E:\\dev-tools\\ffmpeg\\ffmpeg.exe", "-f", "dshow", "-i", "video=Venus USB2.0 Camera:audio=Microphone (High Definition Aud", "-vcodec", "libx264", movieName + ".mkv");
         builder.redirectErrorStream(true);

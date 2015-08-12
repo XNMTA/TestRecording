@@ -48,7 +48,7 @@ public class RecordingDemo {
         capabilitiesDevice1.setCapability("platformVersion", "5.0.1");
         capabilitiesDevice1.setCapability("app", app.getAbsolutePath());
         capabilitiesDevice1.setCapability("appPackage", packageName);
-        MonitorHelper.startRec("test");
+        MonitorHelper.startRec("TestName");
         driverDevice1 = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilitiesDevice1);
     }
 
