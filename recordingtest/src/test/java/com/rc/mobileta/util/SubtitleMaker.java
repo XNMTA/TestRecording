@@ -6,9 +6,6 @@ import org.joda.time.DateTimeZone;
 import java.io.FileWriter;
 import java.io.IOException;
 
-/**
- * Created by shawn.zhang on 2015/8/12.
- */
 public class SubtitleMaker {
     private int stepIndex = 1;
     private String filePath = "";
